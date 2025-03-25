@@ -1,0 +1,110 @@
+1. Write a Java program for a simple search engine. Accept a string to be searched. Search the string in all text files in the current folder. Use a separate thread for each file. The result should display the filename and line number where the string is found.
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.Scanner;
+class Mythread extends Thread 
+{
+    String str;
+    String filename;
+    Mythread(String str, String filename) 
+{
+        this.str = str;
+        this.filename = filename;
+    }
+    public void run() 
+{
+        try 
+{
+            int flag = 0;
+            File f = new File(filename);
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            String line = "";
+            while ((line = br.readLine()) != null) 
+{
+                if (line.contains(str) == true) 
+{
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 1) 
+{
+                System.out.println("String found in folder/file :" + filename);
+            } 
+else 
+{
+                System.out.println("String not found in folder/file :" + filename);
+            }
+            br.close();
+        } 
+catch (Exception e) 
+{
+            e.printStackTrace();
+        }
+    }
+}
+public class B2 {
+    public static void main(String[] args) 
+{
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Search string :");
+        String str = sc.nextLine();
+        //Your folder name 
+        String dirname = "thread";
+        File d = new File(dirname);
+        if (d.isDirectory()) 
+{
+            String s[] = d.list();
+            for (int i = 0; i < s.length; i++) 
+{
+                File f = new File(dirname + "/" + s[i]);
+                if (f.isFile() && s[i].endsWith(".txt")) 
+{
+                    Mythread t = new Mythread(str, dirname + "/" + s[i]);
+                    t.start();
+                }
+            }
+        }
+        sc.close();
+    }
+}
+2. Write a JSP program to calculate sum of first and last digit of a given number. Display sum in Red Color with font size 18.
+HTML FILE
+<html>
+<body>
+<form method=post action="Slip7.jsp">
+Enter Any Number : <Input type=text name=num>
+<input type=submit value=Display>
+</form>
+</body>
+</html>
+JSP FILE:
+<%@page contentType="text/html" pageEncoding="UTF-8">
+<!DOCTYPE html>
+<html>
+<body>
+<%! intn,rem,r; %>
+<% n=Integer.parseInt(request.getParameter("num"));
+if(n<10)
+{
+out.println("Sum of first and last digit is ");
+%><font size=18 color=red><%= n %>
+<%
+}
+else
+{
+rem=n%10;
+do
+{
+r=n%10;
+n=n/10;
+}while(n>0);
+n=rem+r;
+out.println("Sum of first and last digit is ");
+%><font size=18 color=red><%= n %>
+<%
+}
+%>
+</body>
+</html>
