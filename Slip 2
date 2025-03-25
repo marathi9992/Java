@@ -1,0 +1,53 @@
+Slip 2)
+1. Write a java program to read ‘N’ names of your friends, store it into HashSet and display them in ascending order.
+
+import java.util.*;
+public class GFG 
+{
+public static void main(String args[])
+{
+HashSet<String> set = new HashSet<String>();
+set.add("geeks");
+set.add("practice");
+set.add("contribute");
+set.add("ide");
+System.out.println("Original HashSet: "+ set);
+ListList<String> list = new ArrayList<String>(set);
+Collections.sort(list);
+System.out.println("HashSet elements "+ "in sorted order "+ "using List: "+ list);
+}
+}
+
+2. Design a servlet that provides information about a HTTP request from a client, such as IP-Address and browser type. The servlet also provides information about the server on which the servlet is running, such as the operating system type, and the names of currently loaded servlets.
+serverInfo.java
+        import java.io.*;
+        import javax.servlet.*;
+        import javax.servlet.http.*;
+public class serverInfo extends HttpServlet implements Servlet
+{
+    protected void doGet(HttpServletRequest req,HttpServletResponse res)throws IOException,ServletException
+    {
+        res.setContentType("text/html");
+        PrintWriter pw=res.getWriter();
+        pw.println("<html><body><h2>Information about Http Request</h2>");
+        pw.println("<br>Server Name: "+req.getServerName());
+        pw.println("<br>Server Port: "+req.getServerPort());
+        pw.println("<br>Ip Address: "+req.getRemoteAddr());
+//pw.println("<br>Server Path: "+req.getServerPath());        pw.println("<br>Client Browser: "+req.getHeader("User-Agent"));
+        pw.println("</body></html>");
+        pw.close();
+    }
+}
+Web.xml
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app>
+<servlet>
+<servlet-name>serverInfo</servlet-name>
+<servlet-class>ServerInfo</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>serverInfo</servlet-name>
+<url-pattern>/server</url-pattern>
+</servlet-mapping>
+</web-app>
+
