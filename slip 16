@@ -1,0 +1,96 @@
+slip no 16 Q1. Write a java program to create 
+a TreeSet, add some colors (String) and print 
+out the
+ content of TreeSet in ascending order
+ */
+ package com.mycompany.javaslip;
+ import java.util.*;
+ public class slip16_1
+       
+{
+    public static void main(String[] args) {
+        Set<String> colors = new TreeSet<>();
+       
+        colors.add("Red");
+        colors.add("Blue");
+        colors.add("Green");
+        colors.add("Yellow");
+        colors.add("Black");
+       
+        System.out.println(colors);
+    }
+ }
+ /*
+ slip no 16 Q2 Write a Java program to accept 
+the details of Teacher (TNo, TName, Subject). 
+Insert at
+ least 5 Records into Teacher Table and 
+display the details of Teacher who is 
+teaching
+ “JAVA” Subject. (Use PreparedStatement 
+Interface)
+ */
+ package com.mycompany.javaslip;
+ import java.sql.*;
+ import java.util.Scanner;
+ class Teacher {
+    Teacher() throws SQLException, 
+SQLException {
+        Connection conn = 
+DriverManager.getConnection("jdbc:postgresql:
+ //localhost:5432/postgres", "postgres", 
+"postgres");
+       
+        for(int i=0; i<5; i++)
+            insert(conn);
+       
+        select(conn);
+    }
+    private void insert(Connection conn) 
+throws SQLException {
+        String sql = "insert into teacher 
+values(?, ?, ?)";
+ PreparedStatement ps = 
+conn.prepareStatement(sql);
+       
+        Scanner sc = new Scanner(System.in);
+       
+        System.out.println("Enter tno:");
+        ps.setInt(1, sc.nextInt());
+        sc.nextLine();
+       
+        System.out.println("Enter tname:");
+        ps.setString(2, sc.nextLine());
+       
+        System.out.println("Enter subject:");
+        ps.setString(3, sc.nextLine());
+       
+        ps.executeUpdate();
+    }
+    private void select(Connection conn) 
+throws SQLException {
+        String sql = "select * from teacher 
+where subject = 'java'";
+       
+        Statement stmt = 
+conn.createStatement();
+       
+        ResultSet rs = 
+stmt.executeQuery(sql);
+        while(rs.next()) {
+ System.out.println("teacher tno: 
+" + rs.getInt("tno"));
+            System.out.println("teacher 
+tname: " + rs.getString("tname"));
+            System.out.println("teacher 
+subject: " + rs.getString("subject"));
+        }
+    }
+ }
+ public class slip16_2
+ {
+    public static void main(String[] args) 
+throws SQLException {
+        new Teacher();
+    }
+ }
