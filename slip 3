@@ -1,0 +1,76 @@
+Slip 3)
+1. Write a JSP program to display the details of Patient (PNo, PName, Address, age, disease) in tabular form on browser.
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<body>
+<%@ page import="java.sql.*;" %>
+<%! Int pno;
+String pname,address; %>
+<%
+try{
+Class.forName("org.postgresql.Driver");
+Connection cn=DriverManager.getConnection("jdbc:postgresql:patient ","postgres","");
+Statement st=cn.createStatement();
+ResultSe trs=st.executeQuery("select * from Patient");
+%>
+<table border="1" width="40%"> <tr> <td>Patient No</td> <td>Name</td> <td>Address</td> <td>Age</td> <td>disease</td> </tr> <% while(rs.next()) { %> <tr><td><%= rs.getInt("pno") %></td> <td><%= rs.getString("pname") %></td> <td><%= rs.getString("address") %><td><%= rs.getInt("age") %></td><td><%= rs.getString("disease ") %><td>  </tr> <%
+}
+cn.close();
+}catch(Exception e)
+{
+out.println(e);
+}
+%>
+</body>
+</html>
+
+2 .Write a Java program to create LinkedList of String objects and perform the following:
+i. Add element at the end of the list 
+ii. Delete first element of the list 
+iii. Display the contents of list in reverse order
+import java.util.*;  
+public class LinkedList3 {  
+  
+        public static void main(String [] args)  
+        {  
+           LinkedList<String> ll=new LinkedList<String>();  
+           ll.add("Ravi");  
+           ll.add("Vijay");  
+           ll.add("Ajay");  
+           ll.add("Anuj");  
+           ll.add("Gaurav");  
+           ll.add("Harsh");  
+           ll.add("Virat");  
+           ll.add("Gaurav");  
+           ll.add("Harsh");  
+           ll.add("Amit");  
+           System.out.println("Initial list of elements: "+ll);  
+              ll.remove("Vijay");  
+              System.out.println("After invoking remove(object) method: "+ll);   
+              ll.remove(0);  
+              System.out.println("After invoking remove(index) method: "+ll);   
+              LinkedList<String> ll2=new LinkedList<String>();  
+              ll2.add("Ravi");  
+              ll2.add("Hanumat");  
+              ll.addAll(ll2);  
+              System.out.println("Updated list : "+ll);   
+Iterator i=ll.descendingIterator();  
+           while(i.hasNext())  
+           {  
+               System.out.println(i.next());  
+           }  
+              ll.removeAll(ll2);  
+              System.out.println("After invoking removeAll() method: "+ll);   
+              ll.removeFirst();  
+              System.out.println("After invoking removeFirst() method: "+ll);  
+              ll.removeLast();  
+              System.out.println("After invoking removeLast() method: "+ll);  
+              ll.removeFirstOccurrence("Gaurav");  
+              System.out.println("After invoking removeFirstOccurrence() method: "+ll);  
+              ll.removeLastOccurrence("Harsh");  
+              System.out.println("After invoking removeLastOccurrence() method: "+ll);  
+                ll.clear();  
+              System.out.println("After invoking clear() method: "+ll);   
+       }  
+    }                   
