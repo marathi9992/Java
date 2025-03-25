@@ -1,0 +1,68 @@
+1. Design an HTML page which passes customer number to a search servlet. The servlet searches for the customer number in a database (customer table) and returns customer details if found the number otherwise display error message.
+import java.io.*; 
+import javax.servlet.*; 
+import javax.servlet.http.*; 
+import java.sql.*; 
+public class servletDatabaseextends HttpServlet
+{
+Connection cn; 
+public void init() 
+{ 
+try 
+{ 
+Class.forName("org.gjt.mm.mysql.Driver"); cn=DriverManager.getConnection("jdbc:mysql://localhost/stud","root","password"); System.out.println("Hii"); 
+} 
+catch(Exception ce) 
+{
+System.out.println("Error"+ce.getMessage()); 
+}
+} 
+public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+{ 
+resp.setContentType("text/html"); 
+PrintWriter pw=resp.getWriter();
+try 
+{ 
+int rno=Integer.parseInt(req.getParameter("t1"));
+String qry="Select * from student where rollno="+rno;
+Statement st=cn.createStatement(); 
+ResultSet rs=st.executeQuery(qry);
+while(rs.next()) 
+{ 
+pw.print("<table border=1>"); 
+pw.print("<tr>");
+2. Write a Java program to display information about all columns in the DONAR table using ResultSetMetaData.
+import java.sql.*;
+public class DONOR {
+    public static void main(String[] args) {
+        try {
+            // load a driver
+            Class.forName("org.postgresql.Driver");
+            // Establish Connection
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost/postgres", "postgres", "dsk");
+            Statement stmt = null;
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from donor");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            System.out.println("\t-------------------------------------------------");
+            int count = rsmd.getColumnCount();
+            System.out.println("\t No. of Columns: " + rsmd.getColumnCount());
+            System.out.println("\t-------------------------------------------------");
+            for (int i = 1; i <= count; i++) 
+            {
+                System.out.println("\t\tColumn No : " + i);
+                System.out.println("\t\tColumn Name : " + rsmd.getColumnName(i));
+                System.out.println("\t\tColumn Type : " + rsmd.getColumnTypeName(i));
+                System.out.println("\t\tColumn Display Size : " + rsmd.getColumnDisplaySize(i));
+                System.out.println();
+            } // for
+            System.out.println("\t--------------------------------------------------");
+            rs.close();
+            stmt.close();
+            conn.close();
+        } // try
+        catch (Exception e) {
+            System.out.println(e);
+        } // catch
+    }
+}
